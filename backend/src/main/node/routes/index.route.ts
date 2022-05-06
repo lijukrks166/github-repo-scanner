@@ -107,8 +107,9 @@ var root = {
                 }
                 const reg = new RegExp(pattern);
                 let match = repositoryFiles.filter((file) => reg.test(file));
-                if(random) {
-                    match = [match[Math.ceil(Math.random() * match.length)]];
+                if (random) {
+                    const file = match[Math.ceil(Math.random() * match.length)];
+                    match = file ? [file] : [];
                 }
                 return match.map(async (file) => {
                     const parts = file.split(sep);
