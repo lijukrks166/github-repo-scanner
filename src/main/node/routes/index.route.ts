@@ -110,7 +110,6 @@ var root = {
                 if(random) {
                     match = [match[Math.ceil(Math.random() * match.length)]];
                 }
-                console.log(match);
                 return match.map(async (file) => {
                     const parts = file.split(sep);
                     parts.shift();
