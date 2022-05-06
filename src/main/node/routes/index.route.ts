@@ -1,3 +1,4 @@
+import { log } from '@config';
 import { StatusError } from '@errors/status.error';
 import { githubService } from '@service';
 import { AppUtils } from '@utils';
@@ -60,6 +61,7 @@ var root = {
         const user = await githubService.getUser(token);
         let repository: any;
         let repositoryFiles: string[];
+        const path = await githubService.cloneRepository(token, user.login, name, noCache as boolean);
         return {
             name: async () => {
                 if (!repository) {
@@ -94,14 +96,12 @@ var root = {
                     }));
             },
             numberOfFiles: async () => {
-                const path = await githubService.cloneRepository(token, user.login, name, noCache as boolean);
                 if (!repositoryFiles) {
                     repositoryFiles = await AppUtils.listArchiveFiles(path);
                 }
                 return repositoryFiles.length;
             },
             files: async ({ pattern, random }: any) => {
-                const path = await githubService.cloneRepository(token, user.login, name, noCache as boolean);
                 if (!repositoryFiles) {
                     repositoryFiles = await AppUtils.listArchiveFiles(path);
                 }
